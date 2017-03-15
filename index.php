@@ -20,6 +20,7 @@ $objReturn = $request->getBody();
 $arrCards = json_decode($objReturn);
 $countCards = sizeof($arrCards);
 #C:\wamp\www\mtg\images
+
 var_dump($arrCards); die();
 
 for($i=1; $i<=$countCards;$i++){
@@ -33,3 +34,4 @@ for($i=1; $i<=$countCards;$i++){
   //var_dump(file_put_contents($img, ));
 
 }
+
