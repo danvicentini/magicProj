@@ -6,6 +6,7 @@
  * Time: 13:04
  */
 require_once "vendor/autoload.php";
+require_once "utils.php";
 
 use GuzzleHttp\Client;
 
@@ -22,18 +23,28 @@ class ApiDeckbrewMTG extends Client{
   public $cardSets;
 
 
-  public function __construct($currentMethod, $currentURL)
+  public function __construct($loadColor = null, $loadType = null, $loadSuperType = null, $loadSubType = null, $loadCardSet = true)
   {
-    $this->setMethod($currentMethod);
-    $this->setURL($currentURL);
+    $this->setMethod("GET");
+    $this->setURL('http://api.deckbrew.com/mtg');
     parent::__construct();
 
     $this->objReturn = '';
-    $this->colors = $this->getCardColors();
-    $this->types = $this->getCardType();
-    $this->superTypes = $this->getCardSuperTypes();
-    $this->subTypes = $this->getCardSubTypes();
-    $this->cardSets = $this->getCardSets();
+    if(!is_null($loadColor)){
+      $this->colors = $this->getCardColors();
+    }
+    if(!is_null($loadType)){
+      $this->types = $this->getCardType();
+    }
+    if(!is_null($loadSuperType)){
+      $this->superTypes = $this->getCardSuperTypes();
+    }
+    if(!is_null($loadSubType)){
+      $this->subTypes = $this->getCardSubTypes();
+    }
+    if(!is_null($loadCardSet)){
+      $this->cardSets = $this->getCardSets();
+    }
 
     /*$request = $this->request($this->method, $this->url);
     $objReturn = $request->getBody();
@@ -121,6 +132,10 @@ class ApiDeckbrewMTG extends Client{
   }
   public function getObject(){
     return $this->objReturn;
+  }
+
+  public function getCardSetFromObject(){
+    return $this->cardSets;
   }
 
 
